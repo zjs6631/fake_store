@@ -23,4 +23,7 @@ router.get('/Bookmark', item_controller.bookmark_list);
 //GET overlay list using page_overlay_list view
 router.get('/Page%20Overlays', item_controller.pageoverlays_list);
 
+//GET details for specific item
+router.get('/catalog/item/:id', item_controller.item_detail);
+
 module.exports = router;

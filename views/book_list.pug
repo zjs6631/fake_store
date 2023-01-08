@@ -4,12 +4,14 @@ block content
 
     h1= title
 
-    ul 
-        each item in book_list 
-            li 
-                a(href=item.url) #{item.name}
+    
+    each item in book_list 
+
+        div(class='itemDivs')
+            p= item.name
+            p= item.price
+            a(type='button' href=item.url) View item
                     //#{item.description}
                     
         
-        else
-            li There are no more items
+        

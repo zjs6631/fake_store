@@ -110,3 +110,21 @@ exports.pageoverlays_list = function(req, res, next){
             });
         });
 }
+
+//Display a specific item and it's information 
+
+exports.item_detail = (req, res, next) =>{
+    Item.findById(req.params.id)
+        .populate("category")
+        .exec(function(err, item_info){
+            if(err){
+                return next(err);
+            }
+
+            res.render("item_info", {
+                title: item_info.name,
+                item_info: item_info,
+            });
+        });
+
+}
