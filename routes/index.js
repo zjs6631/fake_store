@@ -26,4 +26,10 @@ router.get('/Page%20Overlays', item_controller.pageoverlays_list);
 //GET details for specific item
 router.get('/catalog/item/:id', item_controller.item_detail);
 
+//GET request for creating new item
+router.get('/createItem', item_controller.item_create_get);
+
+//GET request for creating new item
+router.post('/createItem', item_controller.item_create_post);
+
 module.exports = router;

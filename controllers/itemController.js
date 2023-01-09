@@ -128,3 +128,77 @@ exports.item_detail = (req, res, next) =>{
         });
 
 }
+
+//Display item form on GET request
+
+exports.item_create_get = (req, res, next) =>{
+    Category.find()
+        .sort([["name", "ascending"]])
+        .exec(function(err, categories){
+            if(err){
+                return next(err);
+            }
+    res.render("item_form", {title: 'Create new item', categories: categories});
+});
+}
+
+exports.item_create_post = [
+    body("name", "Item name required").trim().isLength({min: 1}).escape(),
+    body("description", "Item description required").trim().isLength({min: 1}).escape(),
+    body("category", "Item category required").trim().isLength({min: 1}).escape(),
+    
+
+
+    //process after the validation above is performed
+    (req, res, next) =>{
+        const errors = validationResult(req);
+
+        const item = new Item({
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            price: req.body.price,
+            number_in_stock: req.body.number_in_stock,
+        });
+
+        if(!errors.isEmpty()){
+            async.parallel(
+                (err, results) => {
+                    if (err) {
+                      return next(err);
+                    }
+                
+
+                    for (const category of results.categories) {
+                        if (item.category.includes(category._id)) {
+                          category.checked = "true";
+                        }
+                      }
+
+                    res.render("item_form", {
+                        title: "Create Item",
+                        name: results.name,
+                        description: results.description,
+                        category: results.categories,
+                        price: results.price,
+                        number_in_stock: results.number_in_stock
+                    });
+                }
+            );
+            return;
+        }
+
+        item.save((err)=>{
+            if(err){
+                return next(err);
+            }
+            //success?
+            res.redirect(item.url);
+        })
+
+    },
+
+    
+
+    
+]
