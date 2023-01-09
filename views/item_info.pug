@@ -1,18 +1,20 @@
 extends layout
 
 block content
-
-    div(class='itemName')
-        h1= title
-    div(class='itemPic')
-    div(class='itemDescription')
-        p= item_info.name
-        p= item_info.description
-        p= item_info.category.name
-        p= item_info.category.description
+    div(class='anotherContainer')
+        div(class='singleItemContainer')
+            div(class='itemName')
+                h1= title
+            div(class='itemPic')
+                p img
+            div(class='itemDescription')
+                p= item_info.name
+                p= item_info.description
+                p= item_info.category.name
+                p= item_info.category.description
     
-    div(class='itemPrice')
-        p= item_info.price
-        button(class='button') Add to cart 
+            div(class='itemPrice')
+                p= "$"+(item_info.price).toFixed(2)
+                button(class='button') Add to cart 
     
     

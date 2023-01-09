@@ -1,15 +1,23 @@
+
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  
 
-  a(href='./inventory') All
-  ul 
-        
-    each category in category_list 
-      li 
-        a(href=category.name) #{category.name}
+  div(class='categoryContainer')
+    div(class='categoryDiv')
+      p(class='catName') All
+      div(class='catImg')
+        p img
+      a(href='./inventory')
+        button(type='button') View
     
-    else  
-      li There are no more categories
+    each category in category_list 
+        div(class='categoryDiv') 
+          p(class='catName') #{category.name}
+          div(class='catImg')
+            p img
+          a(href=category.name)
+            button(type='button') View
+    
+    

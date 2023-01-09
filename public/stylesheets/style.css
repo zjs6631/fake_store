@@ -1,8 +1,166 @@
-body {
-  padding: 50px;
+html, body {
+  height: 100%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background-color: rgb(209, 209, 209);
 }
 
 a {
   color: #00B7FF;
+}
+
+
+
+.row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #232F3E;
+  color: white;
+  
+}
+
+.row li{
+  list-style-type: none;
+}
+
+.row a{
+  color: white;
+  text-decoration: none;
+  
+}
+
+.row .col{
+  
+}
+
+.row h1{
+  margin-top: 0;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.categoryContainer{
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding-top: 30px;
+  
+}
+
+.categoryDiv{
+  display: grid;
+  grid-template-rows: auto;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  color: black;
+  min-width: 20%;
+}
+
+.categoryDiv button{
+  background-color: #FEBD69;
+  border-style: none;
+  min-width: 80px;
+  min-height: 30px;
+  
+}
+
+.categoryDiv p{
+  font-size: 24px;
+  font-weight: bolder;
+  min-width: 100%;
+}
+
+.catName{
+  min-width: 100%;
+}
+
+.catImg{
+  min-width: 80%;
+}
+
+.itemH1{
+  padding-left: 10px;
+}
+ 
+.itemDivContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 100%;
+  gap: 30px;
+  padding-left: 10px;
+  padding-top: 10px;
+  
+}
+
+.itemDivs{
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  min-width: 20%;
+  min-height: 300px;
+}
+
+.itemDivs button{
+  background-color: #FEBD69;
+  border-style: none;
+  min-width: 80px;
+  min-height: 30px;
+}
+
+.itemDivs p{
+  font-size: 1vw;
+  line-break: loose;
+  
+  min-width: 100%;
+}
+
+.anotherContainer{
+  display: grid;
+  justify-content: center;
+  padding-top: 10%;
+  min-height: 50%;
+}
+.singleItemContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  background-color: white;
+  max-width: 80%;
+  justify-self: center;
+}
+
+.singleItemContainer .itemName{
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.singleItemContainer .itemDescription{
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.singleItemContainer .itemPic{
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 4;
+}
+
+.singleItemContainer button{
+  background-color: #FEBD69;
+  border-style: none;
+  min-width: 80px;
+  min-height: 30px;
+  
 }
