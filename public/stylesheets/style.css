@@ -164,3 +164,57 @@ a {
   min-height: 30px;
   
 }
+
+.errorList{
+  list-style: none;
+  color: red;
+}
+
+.itemFormPageContainer{
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  margin: 10px;
+}
+
+.formHeader{
+  color:#232F3E
+}
+.itemForm{
+  max-width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+  height: 250px;
+  justify-content: space-evenly;
+  padding: 20px;
+  padding-right: 40px;
+  border-style: solid;
+  border-color: #232F3E;
+  border-width: 1px;
+}
+
+.itemFormBtn{
+  background-color: #FEBD69;
+  border-style: none;
+  max-width: 80px;
+  min-height: 30px;
+  justify-self: center;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  
+}
+
+.field{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  gap: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #232F3E;
+  padding: 5px;
+}
