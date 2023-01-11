@@ -32,4 +32,8 @@ router.get('/createItem', item_controller.item_create_get);
 //GET request for creating new item
 router.post('/createItem', item_controller.item_create_post);
 
+router.get('/catalog/item/:id/deleteItem', item_controller.item_delete_get);
+
+router.post('/catalog/item/:id/deleteItem', item_controller.item_delete_post);
+
 module.exports = router;

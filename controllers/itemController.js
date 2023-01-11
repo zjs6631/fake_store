@@ -201,3 +201,54 @@ exports.item_create_post = [
 
     
 ]
+
+exports.item_delete_get = (req, res, next) =>{
+    async.parallel(
+        {
+            item(callback){
+                Item.findById(req.params.id).exec(callback);
+            }
+        },
+        (err, results) =>{
+            if (err){
+                return next(err);
+            }
+            if(results.item == null){
+                res.redirect("/inventory");
+            }
+            console.log("made it here");
+            //success
+            res.render("delete_item", {
+                title: "Delete Item",
+                item: results.item,
+            });
+        }
+    )
+}
+
+exports.item_delete_post = (req, res, next) =>{
+    async.parallel(
+        {
+            item(callback){
+                Item.findById(req.params.id).exec(callback);
+            },
+        },
+        (err, results) =>{
+            if(err){
+                return next(err);
+            }
+        },
+
+        console.log(req.params),
+        //success
+        Item.findByIdAndRemove(req.params.id, (err) =>{
+            if(err){
+                return next(err);
+            }
+            
+            res.redirect("/inventory");
+        },
+    
+    )
+    )
+}
