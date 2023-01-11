@@ -36,4 +36,8 @@ router.get('/catalog/item/:id/deleteItem', item_controller.item_delete_get);
 
 router.post('/catalog/item/:id/deleteItem', item_controller.item_delete_post);
 
+router.get('/catalog/item/:id/updateItem', item_controller.item_update_get);
+
+router.post('/catalog/item/:id/updateItem', item_controller.item_update_post);
+
 module.exports = router;

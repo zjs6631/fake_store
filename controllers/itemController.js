@@ -252,3 +252,104 @@ exports.item_delete_post = (req, res, next) =>{
     )
     )
 }
+
+exports.item_update_get = (req, res, next) =>{
+
+    async.parallel(
+        {
+            item(callback){
+                Item.findById(req.params.id)
+                    .populate("category")
+                    .exec(callback)
+            },
+            categories(callback){
+                Category.find(callback);
+            }
+        },
+            
+        (err, results) =>{
+            if(err){
+                return next(err);
+            }
+            if(results.item == null){
+                const err = new Error("Item not found");
+                err.status = 404;
+                return next(err);
+            }
+            console.log(results.item.category);
+            for(const category of results.categories){
+                
+                for(const c of results.item.category){
+                    
+                    if(category._id.toString() == c._id.toString()){
+                        c.checked = "true";
+                    }
+                }
+            }
+            const errors = validationResult(req);
+            res.render("update_form", {
+                item: results.item,
+                categories: results.categories,
+                errors: errors
+            })
+        }
+    )
+}
+
+exports.item_update_post = [
+    body("name", "Item name required").trim().isLength({min: 1}).escape(),
+    body("description", "Item description required").trim().isLength({min: 1}).escape(),
+    body("price", "Item price required").isNumeric().escape(),
+    body("number_in_stock", "Item stock required").isNumeric().escape(),
+    
+
+
+    //process after the validation above is performed
+    (req, res, next) =>{
+        const errors = validationResult(req);
+
+        const item = new Item({
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            price: req.body.price,
+            number_in_stock: req.body.number_in_stock,
+            _id: req.params.id //use old items id to update or a new id will be assigned
+        });
+
+
+        if(!errors.isEmpty()){
+            Category.find()
+                .sort([["name", "ascending"]])
+                .exec(function(err, categories){
+                    
+                    if(err){
+                        
+                        return next(err);
+                    }
+
+                console.log("made it here");
+                
+                res.render("update_form", {title: 'Update item', item: item, categories: categories, errors: errors.array()});
+
+                return;
+            });
+            return;
+        }
+
+        
+
+        Item.findByIdAndUpdate(req.params.id, item, {}, (err, theItem) =>{
+            if(err){
+                return next(err);
+            }
+            console.log(theItem);
+            res.redirect(theItem.url);
+        })
+
+    },
+
+    
+
+    
+]
