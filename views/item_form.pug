@@ -5,7 +5,7 @@ block content
         h1(class='formHeader') #{title}
 
 
-        form(method='POST' action='' class='itemForm')
+        form(method='POST' action='' class='itemForm' enctype='multipart/form-data')
         
             div(class='field')
                 label(for='name') Item Name:
@@ -28,6 +28,11 @@ block content
             div(class='field')
                 label(for='number_in_stock') Number in stock:
                 input#name.form-control(type='text', placeholder='5' name='number_in_stock' value=(undefined===item ? '' : item.number_in_stock)) 
+            
+            div(class='field')
+                label(for='image') Upload image:
+                input#image.form_control(type='file' name='image')
+
             
             div(class='field')    
                 button.btn.btn-primary(type='submit' class='itemFormBtn') Submit    

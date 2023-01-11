@@ -4,8 +4,12 @@ const async = require("async");
 
 const Category = require("../models/category");
 
+const Image = require('../models/image')
+
 const { body, validationResult } = require("express-validator");
 const { isObjectIdOrHexString } = require("mongoose");
+
+
 
 //Display a home page
 
@@ -114,20 +118,30 @@ exports.pageoverlays_list = function(req, res, next){
 //Display a specific item and it's information 
 
 exports.item_detail = (req, res, next) =>{
-    Item.findById(req.params.id)
-        .populate("category")
-        .exec(function(err, item_info){
-            if(err){
-                return next(err);
-            }
-
+    async.parallel(
+        {
+        item(callback){
+            Item.findById(req.params.id).exec(callback);
+        },
+        image(callback){
+            Image.find({itemId: req.params.id}).exec(callback);
+        }
+    },
+    (err, results) =>{
+        if(err){
+            return next(err);
+        }
+        console.log(results.image[0].fileName)
             res.render("item_info", {
-                title: item_info.name,
-                item_info: item_info,
+                title: results.item.name,
+                item_info: results.item,
+                image: results.image[0].fileName,
             });
-        });
-
+        }
+        )
 }
+
+
 
 //Display item form on GET request
 
@@ -156,6 +170,9 @@ exports.item_create_post = [
     //process after the validation above is performed
     (req, res, next) =>{
         const errors = validationResult(req);
+        console.log(req);
+
+        
 
         const item = new Item({
             name: req.body.name,
@@ -164,6 +181,11 @@ exports.item_create_post = [
             price: req.body.price,
             number_in_stock: req.body.number_in_stock,
         });
+
+        const image = new Image({
+            itemId: item._id,
+            fileName: req.file.filename,
+        })
 
 
         if(!errors.isEmpty()){
@@ -176,7 +198,7 @@ exports.item_create_post = [
                         return next(err);
                     }
 
-                console.log("made it here");
+                
                 
                 res.render("item_form", {title: 'Create new item', item: item, categories: categories, errors: errors.array()});
 
@@ -185,7 +207,12 @@ exports.item_create_post = [
             return;
         }
 
-        
+        image.save((err)=>{
+            if(err){
+                return next(err);
+            }
+            
+        })
 
         item.save((err)=>{
             if(err){
@@ -194,6 +221,8 @@ exports.item_create_post = [
             //success?
             res.redirect(item.url);
         });
+
+        
 
     },
 

@@ -6,12 +6,12 @@ block content
             div(class='itemName')
                 h1= title
             div(class='itemPic')
-                p img
+                img(src='images/' + image)
+                
             div(class='itemDescription')
                 p= item_info.name
                 p= item_info.description
-                p= item_info.category.name
-                p= item_info.category.description
+                
     
             div(class='itemPrice')
                 p= "$"+(item_info.price).toFixed(2)
