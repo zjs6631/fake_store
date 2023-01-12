@@ -149,6 +149,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  overflow: hidden;
   grid-column-start: 2;
   grid-column-end: 4;
   grid-row-start: 2;
