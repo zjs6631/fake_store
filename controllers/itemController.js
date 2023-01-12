@@ -131,11 +131,13 @@ exports.item_detail = (req, res, next) =>{
         if(err){
             return next(err);
         }
-        console.log(results.image[0].fileName)
+        console.log(typeof results.image)
+        console.log();
             res.render("item_info", {
                 title: results.item.name,
                 item_info: results.item,
-                image: results.image[0].fileName,
+                image: (Object.keys(results.image).length == 0  ? '' : results.image[0].fileName),
+                
             });
         }
         )
@@ -293,6 +295,9 @@ exports.item_update_get = (req, res, next) =>{
             },
             categories(callback){
                 Category.find(callback);
+            },
+            image(callback){
+                Image.find({itemId: req.params.id}, callback)
             }
         },
             
@@ -319,7 +324,8 @@ exports.item_update_get = (req, res, next) =>{
             res.render("update_form", {
                 item: results.item,
                 categories: results.categories,
-                errors: errors
+                errors: errors,
+                image: (Object.keys(results.image).length == 0  ? '' : results.image[0].fileName)
             })
         }
     )
@@ -337,6 +343,8 @@ exports.item_update_post = [
     (req, res, next) =>{
         const errors = validationResult(req);
 
+        
+
         const item = new Item({
             name: req.body.name,
             description: req.body.description,
@@ -345,6 +353,13 @@ exports.item_update_post = [
             number_in_stock: req.body.number_in_stock,
             _id: req.params.id //use old items id to update or a new id will be assigned
         });
+
+        console.log(req.file.filename)
+        
+        const image = new Image({
+            itemId: item._id,
+            fileName: req.file.filename,
+        })
 
 
         if(!errors.isEmpty()){
@@ -366,13 +381,24 @@ exports.item_update_post = [
             return;
         }
 
-        
+        Image.deleteOne({itemId: req.params.id}, (err) =>{
+            if(err){
+                return next(err);
+            }
+        });
+
+        image.save((err)=>{
+            if(err){
+                return next(err);
+            }
+            
+        });
 
         Item.findByIdAndUpdate(req.params.id, item, {}, (err, theItem) =>{
             if(err){
                 return next(err);
             }
-            console.log(theItem);
+            
             res.redirect(theItem.url);
         })
 

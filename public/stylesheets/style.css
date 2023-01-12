@@ -130,13 +130,15 @@ a {
 .singleItemContainer{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
   background-color: white;
-  max-width: 80%;
+  max-width: 50vw;
   justify-self: center;
+  padding: 5%;
 }
 
 .singleItemContainer .itemName{
+  padding-left: 10px;
   grid-column-start: 2;
   grid-column-end: 4;
   grid-row-start: 1;
@@ -144,16 +146,39 @@ a {
 }
 
 .singleItemContainer .itemDescription{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   grid-column-start: 2;
   grid-column-end: 4;
   grid-row-start: 2;
   grid-row-end: 3;
+  padding-left: 10px;
 }
 
-.singleItemContainer .itemPic{
+.singleItemContainer .itemDescription .crudLinks{
+  display: flex;
+  justify-content: flex-end;
+  
+
+  gap: 10px;
+}
+
+.singleItemContainer .itemPicContainer{
+  display: flex;
+  justify-items: center;
+  align-items: center;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
+  grid-row-end: 4;
+}
+
+.singleItemContainer .itemPrice{
+  padding-left: 10px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
   grid-row-end: 4;
 }
 
@@ -217,4 +242,9 @@ a {
   border-bottom-width: 1px;
   border-bottom-color: #232F3E;
   padding: 5px;
+}
+
+.itemPic{
+  max-width: 100%;
+
 }

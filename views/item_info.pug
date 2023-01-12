@@ -5,12 +5,16 @@ block content
         div(class='singleItemContainer')
             div(class='itemName')
                 h1= title
-            div(class='itemPic')
-                img(src='images/' + image)
+            
+            div(class='itemPicContainer')
+                img(src=('/images/' + image) alt='item pic' class='itemPic')
                 
             div(class='itemDescription')
                 p= item_info.name
                 p= item_info.description
+                div(class='crudLinks')
+                    a(href= item_info.url+'/deleteItem') Delete Item
+                    a(href= item_info.url+'/updateItem') Update Item
                 
     
             div(class='itemPrice')
@@ -18,8 +22,7 @@ block content
                 p= "In stock: " + item_info.number_in_stock
                 button(class='button') Add to cart
 
-            a(href= item_info.url+'/deleteItem') Delete Item
-            a(href= item_info.url+'/updateItem') Update Item
+            
                 
     
     
